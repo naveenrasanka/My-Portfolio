@@ -51,6 +51,20 @@
             <p class="hero-description">
               I build fast, accessible, and memorable digital experiences with a passion for technology.
             </p>
+            <div class="education-highlights" aria-label="Education">
+              <div class="education-item">
+                <span class="education-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" role="img"><path d="m3 9 9-5 9 5-9 5-9-5Zm3 2.5V16c0 1.7 2.7 3 6 3s6-1.3 6-3v-4.5M21 9v6"/></svg>
+                </span>
+                <span><small>Currently studying</small><strong>University of Ruhuna</strong></span>
+              </div>
+              <div class="education-item">
+                <span class="education-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" role="img"><path d="M4 20h16M6 20V9l6-4 6 4v11M9 20v-5h6v5M8 10h.01M12 10h.01M16 10h.01"/></svg>
+                </span>
+                <span><small>School</small><strong>Richmond College Galle</strong></span>
+              </div>
+            </div>
             <div class="hero-actions">
               <a class="button button-primary" href="#contact">Got a project?</a>
               <a class="button button-outline" href="resume.pdf" download>My resume</a>
@@ -86,12 +100,13 @@
         <section class="content-section about-section" id="about">
           <div>
             <p class="section-label">01 / About me</p>
-            <h2>An ICT undergraduate who cares about the details.</h2>
+            <h2>An ICT undergraduate at University of Ruhuna</h2>
           </div>
           <p>
             I’m an Information and Communication Technology undergraduate at the University of
-            Ruhuna who enjoys blending thoughtful design with reliable engineering. From a first
-            sketch to a polished launch, I build products that feel clear, useful, and easy to use.
+            Ruhuna and an alumnus of Richmond College Galle. I enjoy blending thoughtful design
+            with reliable engineering. From a first sketch to a polished launch, I build products
+            that feel clear, useful, and easy to use.
           </p>
         </section>
 
@@ -104,26 +119,15 @@
             <a class="text-link" href="#contact">Start a conversation <span>↗</span></a>
           </div>
           <div class="project-grid">
-            <article class="project-card" tabindex="0" role="button" data-project="dashboard">
-              <div class="project-art"><img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=900&q=85" alt="Analytics dashboard project preview" /></div>
-              <div class="project-number">01 / WEB APP</div>
-              <h3>Studio dashboard</h3>
-              <p>A focused analytics workspace for creative teams with clear data visualizations.</p>
-              <div class="project-tags"><span>React</span><span>UI/UX</span><span class="project-arrow">↗</span></div>
-            </article>
-            <article class="project-card" tabindex="0" role="button" data-project="journal">
-              <div class="project-art"><img src="https://images.unsplash.com/photo-1526628953301-3e589a6a8b74?auto=format&fit=crop&w=900&q=85" alt="Travel journal project preview" /></div>
-              <div class="project-number">02 / PRODUCT</div>
-              <h3>Nomad journal</h3>
-              <p>A calm, editorial travel journal made for curious people on the move.</p>
-              <div class="project-tags"><span>JavaScript</span><span>Design</span><span class="project-arrow">↗</span></div>
-            </article>
-            <article class="project-card" tabindex="0" role="button" data-project="launch">
-              <div class="project-art"><img src="https://images.unsplash.com/photo-1558655146-9f40138edfeb?auto=format&fit=crop&w=900&q=85" alt="Landing page project preview" /></div>
-              <div class="project-number">03 / BRAND</div>
-              <h3>Launch kit</h3>
-              <p>A flexible landing page system for ambitious startups ready to grow.</p>
-              <div class="project-tags"><span>HTML</span><span>CSS</span><span class="project-arrow">↗</span></div>
+            <!-- Copy a project card, then match data-project with a projectData key in script.js. -->
+            <article class="project-card" tabindex="0" role="button" data-project="studentManagement">
+              <div class="project-art">
+                <img src="images/projects/java-project/cover.png" alt="Student Management System project preview" />
+              </div>
+              <div class="project-number">01 / JAVA GROUP PROJECT</div>
+              <h3>Student Management System</h3>
+              <p>Academic management modules with a Java Swing GUI and database integration.</p>
+              <div class="project-tags"><span>Java</span><span>MySQL</span><span class="project-arrow">↗</span></div>
             </article>
           </div>
         </section>
@@ -138,6 +142,12 @@
       <div class="project-modal" id="project-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" hidden>
         <div class="modal-panel">
           <button class="modal-close" type="button" aria-label="Close project details">×</button>
+          <div class="modal-gallery">
+            <button class="gallery-arrow gallery-prev" type="button" aria-label="Previous project image">‹</button>
+            <div id="modal-gallery"></div>
+            <button class="gallery-arrow gallery-next" type="button" aria-label="Next project image">›</button>
+          </div>
+          <div class="gallery-dots" id="gallery-dots" aria-label="Project image slides"></div>
           <p class="section-label" id="modal-category"></p>
           <h2 id="modal-title"></h2>
           <p id="modal-description"></p>
@@ -147,6 +157,13 @@
           </div>
           <p id="modal-details"></p>
         </div>
+      </div>
+
+      <div class="image-lightbox" id="image-lightbox" role="dialog" aria-modal="true" aria-label="Expanded project image" hidden>
+        <button class="lightbox-arrow lightbox-prev" type="button" aria-label="Previous expanded project image">‹</button>
+        <button class="lightbox-close" type="button" aria-label="Close expanded image">×</button>
+        <img id="lightbox-image" alt="" />
+        <button class="lightbox-arrow lightbox-next" type="button" aria-label="Next expanded project image">›</button>
       </div>
 
       <footer class="site-footer">

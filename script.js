@@ -7,27 +7,42 @@ const modalCategory = document.querySelector("#modal-category");
 const modalDescription = document.querySelector("#modal-description");
 const modalSkills = document.querySelector("#modal-skills");
 const modalDetails = document.querySelector("#modal-details");
+const modalGallery = document.querySelector("#modal-gallery");
+const galleryDots = document.querySelector("#gallery-dots");
+const galleryPrev = document.querySelector(".gallery-prev");
+const galleryNext = document.querySelector(".gallery-next");
+const imageLightbox = document.querySelector("#image-lightbox");
+const lightboxImage = document.querySelector("#lightbox-image");
+const lightboxPrev = document.querySelector(".lightbox-prev");
+const lightboxNext = document.querySelector(".lightbox-next");
+let galleryTimer;
+let activeGalleryImages = [];
+let activeGalleryIndex = 0;
+// Add new project entries here. Each key must match a card's data-project value.
 const projectData = {
-  dashboard: {
-    category: "01 / WEB APP",
-    title: "Studio dashboard",
-    description: "A focused analytics workspace for creative teams with clear data visualizations.",
-    skills: ["React", "JavaScript", "CSS", "Charts"],
-    details: "This concept brings campaign metrics, team activity, and performance trends into one calm workspace. The interface is designed around quick scanning, reusable components, and responsive layouts."
-  },
-  journal: {
-    category: "02 / PRODUCT",
-    title: "Nomad journal",
-    description: "A calm, editorial travel journal made for curious people on the move.",
-    skills: ["JavaScript", "HTML", "CSS", "UI Design"],
-    details: "Nomad journal combines long-form storytelling with location-based collections. The visual system uses generous spacing, readable typography, and lightweight interactions to keep the focus on the story."
-  },
-  launch: {
-    category: "03 / BRAND",
-    title: "Launch kit",
-    description: "A flexible landing page system for ambitious startups ready to grow.",
-    skills: ["HTML", "CSS", "Responsive Design", "Branding"],
-    details: "Launch kit is a modular landing page foundation with reusable sections, strong calls to action, and a responsive layout that can be adapted quickly for new products."
+  studentManagement: {
+    category: "01 / JAVA GROUP PROJECT",
+    title: "Student Management System",
+    description: "An academic management application built with Java Swing and database integration.",
+    skills: [
+      "Java",
+      "Java Swing",
+      "MySQL",
+      "Git",
+      "Software Development",
+      "Desktop Application Development",
+      "GitHub",
+      "Database Integration",
+      "Object-Oriented Programming (OOP)",
+      "GUI Development"
+    ],
+    details: "Academic management group project completed from January 2026 to June 2026. Developed modules for lecture management, marks handling, GPA calculation, timetable display, and notice management using a Java Swing GUI connected to a database.",
+    images: [
+      "images/projects/java-project/cover.png",
+      "images/projects/java-project/screen-1.png",
+      "images/projects/java-project/screen-2.png",
+      "images/projects/java-project/screen-3.png"
+    ]
   }
 };
 
@@ -49,8 +64,50 @@ siteNav?.querySelectorAll("a").forEach((link) => {
 
 const closeProjectModal = () => {
   if (!projectModal) return;
+  window.clearInterval(galleryTimer);
+  closeImageLightbox();
   projectModal.hidden = true;
   document.body.classList.remove("modal-open");
+};
+
+const closeImageLightbox = () => {
+  if (imageLightbox) imageLightbox.hidden = true;
+};
+
+const openImageLightbox = (image) => {
+  if (!imageLightbox || !lightboxImage) return;
+  lightboxImage.src = image.src;
+  lightboxImage.alt = image.alt;
+  imageLightbox.hidden = false;
+};
+
+const showLightboxImage = (index) => {
+  showGalleryImage(index);
+  openImageLightbox(activeGalleryImages[activeGalleryIndex]);
+};
+
+const showGalleryImage = (index) => {
+  activeGalleryIndex = (index + activeGalleryImages.length) % activeGalleryImages.length;
+  modalGallery.replaceChildren(activeGalleryImages[activeGalleryIndex]);
+  modalGallery.querySelector("img")?.addEventListener("click", (event) => {
+    event.stopPropagation();
+    openImageLightbox(event.currentTarget);
+  });
+  galleryDots.querySelectorAll("button").forEach((dot, dotIndex) => {
+    dot.classList.toggle("active", dotIndex === activeGalleryIndex);
+    dot.setAttribute("aria-current", dotIndex === activeGalleryIndex ? "true" : "false");
+  });
+  if (imageLightbox && !imageLightbox.hidden) {
+    lightboxImage.src = activeGalleryImages[activeGalleryIndex].src;
+    lightboxImage.alt = activeGalleryImages[activeGalleryIndex].alt;
+  }
+};
+
+const restartGalleryTimer = () => {
+  window.clearInterval(galleryTimer);
+  galleryTimer = window.setInterval(() => {
+    showGalleryImage(activeGalleryIndex + 1);
+  }, 2800);
 };
 
 const openProjectModal = (projectKey) => {
@@ -60,6 +117,24 @@ const openProjectModal = (projectKey) => {
   modalTitle.textContent = project.title;
   modalDescription.textContent = project.description;
   modalDetails.textContent = project.details;
+  activeGalleryImages = project.images.map((image, index) => {
+    const galleryImage = document.createElement("img");
+    galleryImage.src = image;
+    galleryImage.alt = `${project.title} screenshot ${index + 1}`;
+    return galleryImage;
+  });
+  galleryDots.replaceChildren(...project.images.map((_, index) => {
+    const dot = document.createElement("button");
+    dot.type = "button";
+    dot.setAttribute("aria-label", `Show project image ${index + 1}`);
+    dot.addEventListener("click", () => {
+      showGalleryImage(index);
+      restartGalleryTimer();
+    });
+    return dot;
+  }));
+  showGalleryImage(0);
+  restartGalleryTimer();
   modalSkills.replaceChildren(...project.skills.map((skill) => {
     const tag = document.createElement("span");
     tag.textContent = skill;
@@ -68,6 +143,28 @@ const openProjectModal = (projectKey) => {
   projectModal.hidden = false;
   document.body.classList.add("modal-open");
 };
+
+galleryPrev?.addEventListener("click", () => {
+  showGalleryImage(activeGalleryIndex - 1);
+  restartGalleryTimer();
+});
+
+galleryNext?.addEventListener("click", () => {
+  showGalleryImage(activeGalleryIndex + 1);
+  restartGalleryTimer();
+});
+
+modalGallery?.addEventListener("click", (event) => {
+  if (event.target instanceof HTMLImageElement) openImageLightbox(event.target);
+});
+
+lightboxPrev?.addEventListener("click", () => {
+  showLightboxImage(activeGalleryIndex - 1);
+});
+
+lightboxNext?.addEventListener("click", () => {
+  showLightboxImage(activeGalleryIndex + 1);
+});
 
 document.querySelectorAll(".project-card").forEach((card) => {
   card.addEventListener("click", () => openProjectModal(card.dataset.project));
@@ -80,9 +177,21 @@ document.querySelectorAll(".project-card").forEach((card) => {
 });
 
 document.querySelector(".modal-close")?.addEventListener("click", closeProjectModal);
+document.querySelector(".lightbox-close")?.addEventListener("click", closeImageLightbox);
+imageLightbox?.addEventListener("click", (event) => {
+  if (event.target === imageLightbox) closeImageLightbox();
+});
 projectModal?.addEventListener("click", (event) => {
   if (event.target === projectModal) closeProjectModal();
 });
 document.addEventListener("keydown", (event) => {
-  if (event.key === "Escape") closeProjectModal();
+  if (imageLightbox && !imageLightbox.hidden && (event.key === "ArrowLeft" || event.key === "ArrowRight")) {
+    event.preventDefault();
+    showLightboxImage(activeGalleryIndex + (event.key === "ArrowRight" ? 1 : -1));
+    return;
+  }
+  if (event.key === "Escape") {
+    if (imageLightbox && !imageLightbox.hidden) closeImageLightbox();
+    else closeProjectModal();
+  }
 });
