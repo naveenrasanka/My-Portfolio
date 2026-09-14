@@ -166,7 +166,7 @@ h1 { margin-bottom: 14px; font: 700 clamp(3.1rem, 6vw, 4.8rem)/.95 "Space Grotes
 .about-section > p { max-width: 460px; align-self: end; margin-bottom: 4px; color: var(--muted); font-size: 1rem; line-height: 1.9; }
 .section-heading { display: flex; justify-content: space-between; align-items: end; margin-bottom: 47px; }
 .text-link { color: var(--coral); font-size: .85rem; font-weight: 600; } .text-link span { font-size: 1.2rem; }
-.project-grid { display: grid; grid-template-columns: minmax(0, 760px); justify-content: center; gap: 17px; }
+.project-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 17px; }
 .project-card { min-height: 390px; padding: 18px 25px 25px; border: 1px solid var(--line); border-radius: 4px; background: linear-gradient(140deg, rgba(35, 35, 35, .92), rgba(13, 13, 13, .9)); cursor: pointer; box-shadow: 0 18px 55px rgba(0, 0, 0, .2); transition: border-color .25s ease, transform .25s ease, box-shadow .25s ease; }
 .project-card:hover { border-color: var(--coral); transform: translateY(-7px); box-shadow: 0 24px 65px rgba(0, 0, 0, .4), 0 0 30px rgba(255, 118, 0, .08); }
 .project-card:focus-visible { outline: 2px solid var(--coral); outline-offset: 4px; }

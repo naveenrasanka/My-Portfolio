@@ -43,6 +43,23 @@ const projectData = {
       "images/projects/java-project/screen-2.png",
       "images/projects/java-project/screen-3.png"
     ]
+  },
+  databaseManagement: {
+    category: "02 / DATABASE MINI PROJECT",
+    title: "Database Management System Mini Project",
+    description: "A student marks management and GPA calculation module designed with MySQL and relational database principles.",
+    skills: [
+      "MySQL",
+      "Database Management System (DBMS)",
+      "Relational Databases",
+      "Database Design"
+    ],
+    details: "Mini project completed from July 2025 to November 2025. Developed the student marks management module by designing marks-related tables and implementing stored procedures for calculating final marks, grades, GPA, and SGPA.",
+    images: [
+      "images/projects/Database-project/cover.jpg",
+      "images/projects/Database-project/screen-1.jpg",
+      "images/projects/Database-project/sreen-2.jpg"
+    ]
   }
 };
 
