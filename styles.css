@@ -156,12 +156,30 @@ h1 { margin-bottom: 14px; font: 700 clamp(3.1rem, 6vw, 4.8rem)/.95 "Space Grotes
 .portrait-glow { position: absolute; width: 300px; height: 300px; border-radius: 50%; background: #8a3e00; filter: blur(65px); opacity: .28; }
 .shape { position: absolute; z-index: 2; color: rgba(255, 118, 0, .6); font: 300 5rem/1 "Space Grotesk", sans-serif; }
 .shape-left { top: 65px; left: 3%; } .shape-right { right: 4%; bottom: 39px; }
+.scroll-cue { position: absolute; z-index: 2; right: max(28px, calc((100vw - 1170px) / 2 + 28px)); bottom: 24px; display: inline-flex; align-items: center; gap: 10px; color: #a9a9a9; font-size: .64rem; letter-spacing: .12em; text-transform: uppercase; }
+.scroll-cue i { display: grid; width: 28px; height: 28px; place-items: center; border: 1px solid rgba(255, 118, 0, .55); border-radius: 50%; color: var(--coral); font-size: 1rem; font-style: normal; animation: scroll-cue-bounce 1.8s ease-in-out infinite; }
+@keyframes scroll-cue-bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(5px); } }
 .skills-section { padding: 58px 28px 22px; border-top: 1px solid rgba(255, 255, 255, .08); border-bottom: 1px solid rgba(255, 255, 255, .08); background: rgba(24, 24, 24, .74); text-align: center; }
 .skills-section > .section-label { margin-bottom: 25px; }
 .skills { display: flex; justify-content: space-between; gap: 16px; max-width: 1170px; margin: auto; padding: 0 0 25px; color: #a8a8a8; font: 500 .7rem "Space Grotesk", sans-serif; }
 .skill { display: flex; flex: 1; flex-direction: column; align-items: center; gap: 8px; min-width: 70px; padding: 14px 8px; border: 1px solid transparent; border-radius: 12px; transition: border-color .25s ease, background .25s ease, transform .25s ease; }
 .skill:hover { border-color: rgba(255, 118, 0, .35); background: rgba(255, 118, 0, .08); transform: translateY(-4px); }
 .skill i { color: var(--coral); font-size: 1.8rem; filter: drop-shadow(0 0 8px rgba(255, 118, 0, .3)); }
+.services-section { max-width: 1170px; margin: auto; padding: 105px 28px 92px; border-bottom: 1px solid var(--line); }
+.services-section .section-heading { align-items: end; }
+.services-section h2 { max-width: 560px; }
+.section-note { max-width: 300px; margin: 0; color: var(--muted); font-size: .88rem; line-height: 1.7; }
+.service-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.service-card { position: relative; min-height: 245px; padding: 28px; overflow: hidden; border: 1px solid var(--line); background: linear-gradient(145deg, rgba(35, 35, 35, .88), rgba(15, 15, 15, .88)); transition: border-color .25s ease, transform .25s ease, background .25s ease; }
+.service-card:hover { border-color: rgba(255, 118, 0, .7); background: linear-gradient(145deg, rgba(47, 34, 24, .9), rgba(15, 15, 15, .92)); transform: translateY(-5px); }
+.service-number { position: absolute; top: 23px; right: 25px; color: rgba(255, 118, 0, .4); font: 600 .7rem "Space Grotesk", sans-serif; letter-spacing: .12em; }
+.service-icon { display: grid; width: 52px; height: 52px; margin-bottom: 28px; place-items: center; border: 1px solid rgba(255, 118, 0, .45); border-radius: 50%; color: var(--coral); font: 600 1rem "Space Grotesk", sans-serif; }
+.service-card h3 { margin-bottom: 12px; font: 600 1.2rem "Space Grotesk", sans-serif; }
+.service-card p { max-width: 280px; margin: 0; color: var(--muted); font-size: .85rem; line-height: 1.7; }
+.learning-strip { display: flex; align-items: center; gap: 28px; margin-top: 46px; padding-top: 24px; border-top: 1px solid var(--line); }
+.learning-label { flex: 0 0 auto; color: var(--coral); font-size: .68rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
+.learning-list { display: flex; flex-wrap: wrap; gap: 9px; }
+.learning-list span { padding: 8px 11px; border: 1px solid rgba(255, 255, 255, .12); color: #bdbdbd; font-size: .72rem; }
 .content-section { max-width: 1170px; margin: auto; padding: 105px 28px; }
 .about-section { position: relative; display: grid; grid-template-columns: 1.08fr .92fr; gap: 42px; border-bottom: 1px solid var(--line); isolation: isolate; }
 .about-section::before { position: absolute; z-index: -1; top: 18%; left: 18%; width: 230px; height: 230px; border-radius: 50%; background: rgba(255, 118, 0, .12); content: ""; filter: blur(65px); }
@@ -233,6 +251,7 @@ h1 { margin-bottom: 14px; font: 700 clamp(3.1rem, 6vw, 4.8rem)/.95 "Space Grotes
   html { scroll-behavior: auto; }
   body::before, .hero::before { animation: none; }
   .neural-network { opacity: .42; }
+  .scroll-cue i { animation: none; }
 }
 .contact-section { position: relative; isolation: isolate; overflow: hidden; padding: 105px 28px 115px; text-align: center; background: #171717; }
 .contact-section > :not(.neural-network) { position: relative; z-index: 1; }
@@ -259,11 +278,13 @@ h1 { margin-bottom: 14px; font: 700 clamp(3.1rem, 6vw, 4.8rem)/.95 "Space Grotes
   .hero { display: flex; flex-direction: column-reverse; align-items: stretch; min-height: auto; padding: 10px 22px 62px; }
   .hero-visual { min-height: 360px; }   .hero-visual img { width: 290px; height: 290px; } .portrait-ring { width: 320px; height: 320px; border-width: 14px; }
   .hero-copy { padding-left: 0; } .hero-description { font-size: .9rem; }
+  .scroll-cue { right: 22px; bottom: 20px; }
   .education-highlights { max-width: none; }
   .shape-left { left: 1%; } .shape-right { right: 0; }
   .skills-section { padding: 48px 22px 0; }
   .skills { justify-content: flex-start; overflow: hidden; padding: 0 0 20px; gap: 27px; white-space: nowrap; font-size: .75rem; }
   .content-section { padding: 75px 22px; } .about-section { display: block; } .about-section::after { display: none; } .about-section > div, .about-section > p { padding: 30px 25px; } .about-section > p { margin: 22px 0 0; font-size: .95rem; line-height: 1.8; }
+  .services-section { padding: 75px 22px; } .services-section .section-heading { display: block; } .section-note { margin-top: 22px; } .service-grid { grid-template-columns: 1fr; } .service-card { min-height: 205px; } .learning-strip { display: block; margin-top: 35px; } .learning-list { margin-top: 16px; }
   .section-heading { display: block; } .section-heading .text-link { display: inline-block; margin-top: 22px; }
   .project-grid { grid-template-columns: 1fr; } .project-card { min-height: 235px; } .project-number { margin-bottom: 42px; }
   .contact-section { padding: 80px 22px 90px; }
