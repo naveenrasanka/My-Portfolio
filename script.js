@@ -110,6 +110,87 @@ const startNeuralNetwork = (neuralNetwork) => {
 };
 
 neuralNetworks.forEach(startNeuralNetwork);
+
+const updateSlides = [
+  {
+    image: "images/updates/image-1.jpeg",
+    category: "LATEST UPDATE",
+    title: "A New Portfolio Moment",
+    description: "Sharing a recent event, certificate, or work experience from my development journey."
+  },
+  {
+    image: "images/projects/java-project/screen-1.png",
+    category: "PROJECT WORK",
+    title: "Student Management System",
+    description: "Building practical Java applications with a Swing interface and database integration."
+  },
+  {
+    image: "images/projects/Database-project/screen-1.jpg",
+    category: "PROJECT WORK",
+    title: "Database Management System",
+    description: "Designing relational tables and stored procedures for marks, grades, GPA, and SGPA calculations."
+  },
+  {
+    image: "images/projects/java-project/screen-2.png",
+    category: "LEARNING",
+    title: "Learning Through Projects",
+    description: "Turning classroom concepts into useful software and strengthening problem-solving skills."
+  },
+  {
+    image: "images/Home-Image/Home-01.jpg",
+    category: "EXPERIENCE",
+    title: "Growing as a Developer",
+    description: "Exploring new technologies and building a foundation for thoughtful digital experiences."
+  }
+];
+const updatesImage = document.querySelector("#updates-image");
+const updatesCategory = document.querySelector("#updates-category");
+const updatesTitle = document.querySelector("#updates-title-text");
+const updatesDescription = document.querySelector("#updates-description");
+const updatesCounter = document.querySelector("#updates-counter");
+const updatesDots = document.querySelector("#updates-dots");
+let activeUpdateIndex = 0;
+let updatesTimer;
+
+const showUpdate = (index) => {
+  if (!updatesImage || !updatesCategory || !updatesTitle || !updatesDescription || !updatesCounter || !updatesDots) return;
+  activeUpdateIndex = (index + updateSlides.length) % updateSlides.length;
+  const slide = updateSlides[activeUpdateIndex];
+  updatesImage.classList.add("is-changing");
+  window.setTimeout(() => {
+    updatesImage.src = slide.image;
+    updatesImage.alt = slide.title;
+    updatesCategory.textContent = slide.category;
+    updatesTitle.textContent = slide.title;
+    updatesDescription.textContent = slide.description;
+    updatesCounter.textContent = `${String(activeUpdateIndex + 1).padStart(2, "0")} / ${String(updateSlides.length).padStart(2, "0")}`;
+    updatesDots.querySelectorAll("button").forEach((dot, dotIndex) => {
+      dot.classList.toggle("active", dotIndex === activeUpdateIndex);
+    });
+    updatesImage.classList.remove("is-changing");
+  }, 250);
+};
+
+const restartUpdates = () => {
+  window.clearInterval(updatesTimer);
+  updatesTimer = window.setInterval(() => showUpdate(activeUpdateIndex + 1), 4500);
+};
+
+if (updatesDots) {
+  updatesDots.replaceChildren(...updateSlides.map((slide, index) => {
+    const dot = document.createElement("button");
+    dot.type = "button";
+    dot.setAttribute("aria-label", `Show update ${index + 1}: ${slide.title}`);
+    dot.addEventListener("click", () => {
+      showUpdate(index);
+      restartUpdates();
+    });
+    return dot;
+  }));
+  showUpdate(0);
+  restartUpdates();
+}
+
 // Add new project entries here. Each key must match a card's data-project value.
 const projectData = {
   studentManagement: {

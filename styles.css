@@ -192,6 +192,18 @@ h1 { margin-bottom: 14px; font: 700 clamp(3.1rem, 6vw, 4.8rem)/.95 "Space Grotes
 .section-label { margin-bottom: 23px; color: var(--coral); font-size: .71rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
 .content-section h2 { max-width: 440px; margin: 0; font: 600 clamp(2rem, 4vw, 3.4rem)/1.04 "Space Grotesk", sans-serif; letter-spacing: -.055em; }
 .about-section > p { max-width: 460px; align-self: end; margin-bottom: 4px; color: var(--muted); font-size: 1rem; line-height: 1.9; }
+.updates-section { max-width: 1170px; margin: auto; padding: 105px 28px; border-bottom: 1px solid var(--line); }
+.updates-showcase { display: grid; grid-template-columns: 1.3fr .7fr; gap: 30px; align-items: stretch; }
+.updates-image-wrap { position: relative; aspect-ratio: 3 / 2; overflow: hidden; border: 1px solid var(--line); background: radial-gradient(circle at center, #292929, #111); }
+.updates-image-wrap img { display: block; width: 100%; height: 100%; padding: 12px; object-fit: contain; filter: saturate(.8); transition: opacity .25s ease, transform .45s ease, filter .45s ease; }
+.updates-image-wrap img.is-changing { opacity: 0; transform: scale(1.04); }
+.updates-counter { position: absolute; right: 20px; bottom: 18px; padding: 8px 10px; color: var(--coral); background: rgba(0, 0, 0, .7); font-size: .7rem; letter-spacing: .12em; }
+.updates-content { display: flex; flex-direction: column; justify-content: center; padding: 35px; border: 1px solid rgba(255, 118, 0, .3); background: linear-gradient(145deg, rgba(35, 35, 35, .92), rgba(14, 14, 14, .9)); }
+.updates-content h3 { margin-bottom: 18px; font: 600 clamp(1.8rem, 3vw, 3rem)/1.05 "Space Grotesk", sans-serif; }
+.updates-content > p:not(.section-label) { color: var(--muted); line-height: 1.8; }
+.updates-dots { display: flex; gap: 8px; margin-top: 28px; }
+.updates-dots button { width: 26px; height: 4px; padding: 0; border: 0; background: #555; cursor: pointer; }
+.updates-dots button.active, .updates-dots button:hover { background: var(--coral); }
 .section-heading { display: flex; justify-content: space-between; align-items: end; margin-bottom: 47px; }
 .text-link { color: var(--coral); font-size: .85rem; font-weight: 600; } .text-link span { font-size: 1.2rem; }
 .project-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 17px; }
@@ -284,6 +296,7 @@ h1 { margin-bottom: 14px; font: 700 clamp(3.1rem, 6vw, 4.8rem)/.95 "Space Grotes
   .skills-section { padding: 48px 22px 0; }
   .skills { justify-content: flex-start; overflow: hidden; padding: 0 0 20px; gap: 27px; white-space: nowrap; font-size: .75rem; }
   .content-section { padding: 75px 22px; } .about-section { display: block; } .about-section::after { display: none; } .about-section > div, .about-section > p { padding: 30px 25px; } .about-section > p { margin: 22px 0 0; font-size: .95rem; line-height: 1.8; }
+  .updates-section { padding: 75px 22px; } .updates-showcase { grid-template-columns: 1fr; } .updates-image-wrap { aspect-ratio: 4 / 3; } .updates-content { padding: 28px; }
   .services-section { padding: 75px 22px; } .services-section .section-heading { display: block; } .section-note { margin-top: 22px; } .service-grid { grid-template-columns: 1fr; } .service-card { min-height: 205px; } .learning-strip { display: block; margin-top: 35px; } .learning-list { margin-top: 16px; }
   .section-heading { display: block; } .section-heading .text-link { display: inline-block; margin-top: 22px; }
   .project-grid { grid-template-columns: 1fr; } .project-card { min-height: 235px; } .project-number { margin-bottom: 42px; }
