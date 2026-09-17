@@ -96,7 +96,7 @@ a { color: inherit; text-decoration: none; }
 }
 .hero::before {
   position: absolute;
-  z-index: -1;
+  z-index: 0;
   top: 0;
   bottom: 0;
   left: 50%;
@@ -108,6 +108,16 @@ a { color: inherit; text-decoration: none; }
   opacity: .9;
   animation: portrait-side-breathe 4s ease-in-out infinite alternate;
   transform-origin: center;
+  pointer-events: none;
+}
+.neural-network {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: .72;
+  mix-blend-mode: screen;
   pointer-events: none;
 }
 @keyframes portrait-side-breathe {
@@ -222,8 +232,10 @@ h1 { margin-bottom: 14px; font: 700 clamp(3.1rem, 6vw, 4.8rem)/.95 "Space Grotes
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   body::before, .hero::before { animation: none; }
+  .neural-network { opacity: .42; }
 }
-.contact-section { padding: 105px 28px 115px; text-align: center; background: #171717; }
+.contact-section { position: relative; isolation: isolate; overflow: hidden; padding: 105px 28px 115px; text-align: center; background: #171717; }
+.contact-section > :not(.neural-network) { position: relative; z-index: 1; }
 .contact-section h2 { margin-bottom: 34px; font: 600 clamp(2.7rem, 7vw, 5.8rem)/.95 "Space Grotesk", sans-serif; letter-spacing: -.07em; }
 .site-footer { display: flex; flex-direction: column; align-items: center; max-width: none; margin: 0; padding: 70px 28px 38px; color: #b7b7b7; background: #090909; font-size: .8rem; }
 .footer-brand { margin-bottom: 46px; color: #e5e9eb; font: 600 clamp(2.5rem, 8vw, 6.8rem)/.9 "Space Grotesk", sans-serif; letter-spacing: .08em; text-align: center; }

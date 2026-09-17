@@ -15,9 +15,101 @@ const imageLightbox = document.querySelector("#image-lightbox");
 const lightboxImage = document.querySelector("#lightbox-image");
 const lightboxPrev = document.querySelector(".lightbox-prev");
 const lightboxNext = document.querySelector(".lightbox-next");
+const neuralNetworks = document.querySelectorAll(".neural-network");
 let galleryTimer;
 let activeGalleryImages = [];
 let activeGalleryIndex = 0;
+
+const startNeuralNetwork = (neuralNetwork) => {
+  if (!(neuralNetwork instanceof HTMLCanvasElement)) return;
+  const context = neuralNetwork.getContext("2d");
+  if (!context) return;
+
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const nodes = [];
+  let animationFrame;
+  let width = 0;
+  let height = 0;
+
+  const resize = () => {
+    const bounds = neuralNetwork.getBoundingClientRect();
+    const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
+    width = bounds.width;
+    height = bounds.height;
+    neuralNetwork.width = Math.round(width * pixelRatio);
+    neuralNetwork.height = Math.round(height * pixelRatio);
+    context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+
+    const nodeCount = width < 700 ? 30 : 58;
+    nodes.length = 0;
+    for (let index = 0; index < nodeCount; index += 1) {
+      nodes.push({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        radius: 1.1 + Math.random() * 1.8,
+        speedX: (Math.random() - .5) * .18,
+        speedY: (Math.random() - .5) * .14,
+        accent: Math.random() > .76
+      });
+    }
+    draw();
+  };
+
+  const draw = () => {
+    context.clearRect(0, 0, width, height);
+    const linkDistance = width < 700 ? 115 : 145;
+
+    nodes.forEach((node, nodeIndex) => {
+      nodes.slice(nodeIndex + 1).forEach((other) => {
+        const distanceX = node.x - other.x;
+        const distanceY = node.y - other.y;
+        const distance = Math.hypot(distanceX, distanceY);
+        if (distance > linkDistance) return;
+        const opacity = (1 - distance / linkDistance) * .16;
+        context.beginPath();
+        context.moveTo(node.x, node.y);
+        context.lineTo(other.x, other.y);
+        context.strokeStyle = `rgba(255, 118, 0, ${opacity})`;
+        context.lineWidth = .7;
+        context.stroke();
+      });
+    });
+
+    nodes.forEach((node) => {
+      context.beginPath();
+      context.arc(node.x, node.y, node.radius, 0, Math.PI * 2);
+      context.fillStyle = node.accent
+        ? "rgba(255, 151, 65, .78)"
+        : "rgba(184, 198, 204, .48)";
+      context.shadowBlur = node.accent ? 10 : 0;
+      context.shadowColor = "rgba(255, 118, 0, .8)";
+      context.fill();
+      context.shadowBlur = 0;
+
+      if (!prefersReducedMotion.matches) {
+        node.x += node.speedX;
+        node.y += node.speedY;
+        if (node.x < -10 || node.x > width + 10) node.speedX *= -1;
+        if (node.y < -10 || node.y > height + 10) node.speedY *= -1;
+      }
+    });
+  };
+
+  const animate = () => {
+    draw();
+    animationFrame = window.requestAnimationFrame(animate);
+  };
+
+  window.addEventListener("resize", resize);
+  resize();
+  if (!prefersReducedMotion.matches) animate();
+  window.addEventListener("pagehide", () => {
+    window.cancelAnimationFrame(animationFrame);
+    window.removeEventListener("resize", resize);
+  }, { once: true });
+};
+
+neuralNetworks.forEach(startNeuralNetwork);
 // Add new project entries here. Each key must match a card's data-project value.
 const projectData = {
   studentManagement: {
